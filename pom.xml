@@ -21,6 +21,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,18 +81,6 @@
             </plugin>
         </plugins>
     </build>
-    <build>
-   <pluginManagement>
-     <plugins>
-       <plugin>
-         <groupId>org.sonarsource.scanner.maven</groupId>
-         <artifactId>sonar-maven-plugin</artifactId>
-         <version>3.7.0.1746</version>
-       </plugin>
-     </plugins>
-   </pluginManagement>
- </build>
-
         <distributionManagement>
         <repository>
             <id>releases</id>
