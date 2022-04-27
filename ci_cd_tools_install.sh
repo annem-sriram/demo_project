@@ -40,17 +40,17 @@ echo 1 > /proc/sys/vm/drop_caches
 echo 2 > /proc/sys/vm/drop_caches
 ###################################        MAVEN    ############################
 cd /opt/
-wget https://mirrors.estointernet.in/apache/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz
-tar -xvf apache-maven-3.8.3-bin.tar.gz
+wget https://mirrors.estointernet.in/apache/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
+tar -xvf apache-maven-3.8.5-bin.tar.gz
 cd
-echo 'export M2_HOME=/opt/apache-maven-3.8.3/' >>~/.bash_profile
+echo 'export M2_HOME=/opt/apache-maven-3.8.5/' >>~/.bash_profile
 echo
 echo 'export M2=$M2_HOME/bin' >>~/.bash_profile
 echo
 echo 'export PATH=$M2:$PATH'  >>~/.bash_profile
 echo
-cd 
-cd 
+cd
+cd
 . .bash_profile
 echo
 ################################               JENKINS           #####################################
@@ -68,25 +68,26 @@ sudo service jenkins restart
 sudo service docker restart
 ###########################                 TOMCAT                 ################################
 cd /opt/
-wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.72/bin/apache-tomcat-8.5.72.tar.gz
-tar -xvf apache-tomcat-8.5.72.tar.gz
-cd /opt/apache-tomcat-8.5.72/conf
+wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.78/bin/apache-tomcat-8.5.78.tar.gz
+tar -xvf apache-tomcat-8.5.78.tar.gz
+cd /opt/apache-tomcat-8.5.78/conf
 echo '<tomcat-users>' >tomcat-users.xml
 echo '<user username="admin" password="admin" roles="manager-gui,admin-gui,manager-script"/>' >>tomcat-users.xml
 echo '</tomcat-users>' >>tomcat-users.xml
-cd /opt/apache-tomcat-8.5.72/webapps/manager/META-INF
+cd /opt/apache-tomcat-8.5.78/webapps/manager/META-INF
 sed -i '21,22d' context.xml
-cd /opt/apache-tomcat-8.5.72/conf
+cd /opt/apache-tomcat-8.5.78/conf
 sed -i 's/Connector port="8080"/Connector port="8087"/g' server.xml
-/opt/apache-tomcat-8.5.72/bin/shutdown.sh
+/opt/apache-tomcat-8.5.78/bin/shutdown.sh
 sleep 10
-/opt/apache-tomcat-8.5.72/bin/startup.sh
+/opt/apache-tomcat-8.5.78/bin/startup.sh
 echo 1 > /proc/sys/vm/drop_caches
 echo 2 > /proc/sys/vm/drop_caches
 ############################               MYSQL                #############################
 cd /opt/
 wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
 sudo yum install mysql57-community-release-el7-9.noarch.rpm -y
+rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 sudo yum install mysql-server
 systemctl restart mysqld.service
 sleep 10
@@ -170,10 +171,13 @@ echo 'sonar.jdbc.url=jdbc:mysql://localhost:3306/devops_db?useUnicode=true&chara
 /opt/sonarqube/bin/linux-x86-64/sonar.sh start
 echo 1 > /proc/sys/vm/drop_caches
 echo 2 > /proc/sys/vm/drop_caches
-cd 
+cd
 . .bash_profile
 ##########################
 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum -y install ansible
 #target/${POM_ARTIFACTID}-${POM_VERSION}.${POM_PACKAGING}
 sudo chmod 666 /var/run/docker.sock
+########### NodeJs #########
+curl --silent --location https://rpm.nodesource.com/setup_14.x | bash -
+yum -y install nodejs
